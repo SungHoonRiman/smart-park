@@ -1,0 +1,184 @@
+{
+	"info": {
+		"_postman_id": "a946c37d-8ec6-4042-ad3d-f9b95bd02a60",
+		"name": "REST API: Smart Park",
+		"description": "# 🚀 Get started here\n\nThis guides you through REST API which allows clients to communicate with the parking  \nmanagement system.\n\n**What to expect?**\n\nThe API should be capable of doing:  \n• Registering a parking lot  \n• Registering a vehicle  \n• Checking in a vehicle to a parking lot  \n• Checking out a vehicle from a parking lot  \n• Viewing current occupancy and availability of a parking lot  \n• Viewing all vehicles currently parked in a lot\n\n## 🔖 **How to use?**\n\n#### **Step 1: Send requests**\n\nAPIs in this collections allows you to perform POST, GET, HTTP methods.\n\nThis collection contains each of these request types.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request.\n\n``` json\n{\n    \"lotId\": \"PARK001\",\n    \"location\": \"Basement 1\",\n    \"capacity\": 5,\n    \"occupiedSpaces\": 0\n}\n\n ```",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "30107387"
+	},
+	"item": [
+		{
+			"name": "Registering a parking lot",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lotId\": \"PARK004\",\r\n    \"location\": \"Condominium Area\",\r\n    \"capacity\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{parking_lot_base_url}}",
+				"description": "This is a POST request and it is used to register a parking lot. To test, Click the hyperlink above \"Open Request\".\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "Viewing current occupancy and availability of a parking lot",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{parking_lot_base_url}}/PARK004",
+				"description": "This is a GET request that will check the availability of a parking lot. . I used Path variable in the endpoint here the syntax is:  \n**{{parking_lot_base_url}}/**`lotId`\n\nTo test, Click the hyperlink above \"Open Request\".\n\nA successful POST request typically returns a `200 OK` and will return a JSON containning the details of the parking lot."
+			},
+			"response": []
+		},
+		{
+			"name": "Viewing all vehicles currently parked in a lot",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{vehicle_base_url}}/lot/PARK004",
+				"description": "This is a GET request that will the vehicles parked in a designated lotId of the parking lot. I used Path variable in the endpoint here the syntax is:  \n**{{vehicle_base_url}}/lot/**`lotId`\n\nTo test, Click the hyperlink above \"Open Request\".\n\nA successful POST request typically returns a `200 OK` and will return a JSON containning the details of the parking lot."
+			},
+			"response": []
+		},
+		{
+			"name": "Registering a vehicle",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"licensePlate\": \"CAR-1210\",\n  \"type\": \"CAR\",\n  \"ownerName\": \"Anna Smith\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{vehicle_base_url}}",
+				"description": "This is a POST request and it is used to register a vehicle. To test, Click the hyperlink above \"Open Request\".\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "Checking in a vehicle to a parking lot",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful PUT request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "{{vehicle_base_url}}/PARK004/check-in/TRK-5555",
+				"description": "This is a POST request that will check in the vehicle. I used Path variable in the endpoint here the syntax is:  \n**{{vehicle_base_url}}/**`lotId`**/check-in/**`licensePlate`\n\nTo test, Click the hyperlink above \"Open Request\".\n\nA successful POST request typically returns a `200 OK` and will return a message."
+			},
+			"response": []
+		},
+		{
+			"name": "Checking out a vehicle from a parking lot",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "{{vehicle_base_url}}/check-out/CAR-9999",
+				"description": "This is a POST request that will check out the vehicle. I used Path variable in the endpoint here the syntax is:  \n**{{vehicle_base_url}}/check-out/**`licensePlate`\n\nTo test, Click the hyperlink above \"Open Request\".\n\nA successful POST request typically returns a `200 OK` and will return a message."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1",
+			"disabled": true
+		},
+		{
+			"key": "parking_lot_base_url",
+			"value": "http://localhost:8080/parking-lots"
+		},
+		{
+			"key": "vehicle_base_url",
+			"value": "http://localhost:8080/vehicles",
+			"type": "string"
+		}
+	]
+}
