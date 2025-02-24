@@ -45,7 +45,7 @@ mvn spring-boot:run
 
 | Method | Endpoint                                    | Description            |
 |--------|---------------------------------------------|------------------------|
-| `POST` | `/api/vehicles`                             | Register a new vehicle |
+| `POST` | `/vehicles`                                 | Register a new vehicle |
 | `POST` | `/vehicles/{lotId}/check-in/{licensePlate}` | Check-in a vehicle     |
 | `POST` | `/vehicles/check-out/{licensePlate}`        | Check-out a vehicle    |
 
