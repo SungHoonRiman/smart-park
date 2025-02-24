@@ -61,7 +61,7 @@ After running the application, access the **H2 console** at:
 
 Use the following credentials:
 
-- **JDBC URL:** `jdbc:h2:mem:testdb`
+- **JDBC URL:** `jdbc:h2:mem:smartparkdb`
 - **Username:** `username`
 - **Password:** *(leave empty)*
 
